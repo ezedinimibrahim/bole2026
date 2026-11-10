@@ -206,22 +206,22 @@ function initEventListeners() {
   // Also allow dragging photo directly onto the preview container!
   setupDragAndDrop(DOM.dpStage);
 
-  // --- Zoom & Pan Controls ---
-  DOM.zoomSlider.addEventListener('input', (e) => {
+  // Optional Slider & Buttons (if present in DOM)
+  DOM.zoomSlider?.addEventListener('input', (e) => {
     setZoom(parseFloat(e.target.value));
   });
 
-  DOM.zoomInBtn.addEventListener('click', () => {
+  DOM.zoomInBtn?.addEventListener('click', () => {
     setZoom(state.zoom + CONFIG.ZOOM_STEP * 2);
   });
 
-  DOM.zoomOutBtn.addEventListener('click', () => {
+  DOM.zoomOutBtn?.addEventListener('click', () => {
     setZoom(state.zoom - CONFIG.ZOOM_STEP * 2);
   });
 
-  DOM.resetPositionBtn.addEventListener('click', resetPosition);
+  DOM.resetPositionBtn?.addEventListener('click', resetPosition);
 
-  // Mouse Wheel Zoom over Photo Slot
+  // Mouse Wheel Zoom over Photo Slot (Live Preview)
   DOM.dpPhotoSlot.addEventListener('wheel', handleSlotWheel, { passive: false });
 
   // Direct Drag Repositioning on Photo Slot (Mouse & Touch via PointerEvents)
@@ -230,11 +230,11 @@ function initEventListeners() {
   DOM.dpPhotoSlot.addEventListener('pointerup', handlePointerUp);
   DOM.dpPhotoSlot.addEventListener('pointercancel', handlePointerUp);
 
-  // Nudge Directional Buttons
-  DOM.nudgeUpBtn.addEventListener('click', () => nudgePhoto(0, -CONFIG.NUDGE_STEP));
-  DOM.nudgeDownBtn.addEventListener('click', () => nudgePhoto(0, CONFIG.NUDGE_STEP));
-  DOM.nudgeLeftBtn.addEventListener('click', () => nudgePhoto(-CONFIG.NUDGE_STEP, 0));
-  DOM.nudgeRightBtn.addEventListener('click', () => nudgePhoto(CONFIG.NUDGE_STEP, 0));
+  // Optional Nudge Directional Buttons
+  DOM.nudgeUpBtn?.addEventListener('click', () => nudgePhoto(0, -CONFIG.NUDGE_STEP));
+  DOM.nudgeDownBtn?.addEventListener('click', () => nudgePhoto(0, CONFIG.NUDGE_STEP));
+  DOM.nudgeLeftBtn?.addEventListener('click', () => nudgePhoto(-CONFIG.NUDGE_STEP, 0));
+  DOM.nudgeRightBtn?.addEventListener('click', () => nudgePhoto(CONFIG.NUDGE_STEP, 0));
 
   // --- Name Input Handlers ---
   DOM.nameInput.addEventListener('input', handleNameInput);
@@ -338,7 +338,8 @@ function loadUserImageFromSrc(src, fileName = 'custom-photo.jpg', fileSize = 'Hi
     state.zoom = 1.0;
     state.panX = 0;
     state.panY = 0;
-    DOM.zoomSlider.value = '1.0';
+    if (DOM.zoomSlider) DOM.zoomSlider.value = '1.0';
+    if (DOM.zoomValue) DOM.zoomValue.textContent = '100%';
 
     // Update UI elements
     DOM.statusThumb.src = src;
@@ -380,8 +381,8 @@ function removeUserPhoto() {
   DOM.dpUserPhoto.src = '';
   DOM.dpUserPhoto.hidden = true;
   DOM.slotEmptyState.style.display = 'flex';
-  DOM.zoomSlider.value = '1.0';
-  DOM.zoomValue.textContent = '100%';
+  if (DOM.zoomSlider) DOM.zoomSlider.value = '1.0';
+  if (DOM.zoomValue) DOM.zoomValue.textContent = '100%';
 
   updateLivePreview();
   showToast('Photo removed.', 'info');
@@ -402,8 +403,8 @@ function loadSampleData() {
 
 function setZoom(newZoom) {
   state.zoom = Math.min(CONFIG.ZOOM_MAX, Math.max(CONFIG.ZOOM_MIN, newZoom));
-  DOM.zoomSlider.value = state.zoom.toFixed(2);
-  DOM.zoomValue.textContent = `${Math.round(state.zoom * 100)}%`;
+  if (DOM.zoomSlider) DOM.zoomSlider.value = state.zoom.toFixed(2);
+  if (DOM.zoomValue) DOM.zoomValue.textContent = `${Math.round(state.zoom * 100)}%`;
   updateLivePreview();
 }
 
@@ -411,10 +412,10 @@ function resetPosition() {
   state.zoom = 1.0;
   state.panX = 0;
   state.panY = 0;
-  DOM.zoomSlider.value = '1.0';
-  DOM.zoomValue.textContent = '100%';
+  if (DOM.zoomSlider) DOM.zoomSlider.value = '1.0';
+  if (DOM.zoomValue) DOM.zoomValue.textContent = '100%';
   updateLivePreview();
-  showToast('Position and zoom reset to default.', 'info');
+  showToast('Position reset to default.', 'info');
 }
 
 function nudgePhoto(dx, dy) {

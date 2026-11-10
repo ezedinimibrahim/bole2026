@@ -72,6 +72,8 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body {
@@ -81,6 +83,8 @@ body {
   min-height: 100vh;
   line-height: 1.5;
   overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
   position: relative;
   background-image: 
     radial-gradient(circle at 10% 20%, rgba(244, 120, 7, 0.12) 0%, transparent 40%),
@@ -127,20 +131,29 @@ body {
   padding: 0 1.25rem;
   position: relative;
   z-index: 1;
+  box-sizing: border-box;
 }
 
 /* --------------------------------------------------------------------------
-   4. Header Section
+   4. Header Section (Fully Centralized)
    -------------------------------------------------------------------------- */
 .app-header {
   padding: 2.5rem 0 1.5rem;
   text-align: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .header-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .header-badges {
@@ -148,7 +161,8 @@ body {
   gap: 0.6rem;
   flex-wrap: wrap;
   justify-content: center;
-  margin-bottom: 0.85rem;
+  align-items: center;
+  margin: 0 auto 0.85rem;
 }
 
 .badge {
@@ -190,7 +204,10 @@ body {
   font-weight: 900;
   letter-spacing: -0.5px;
   line-height: 1.15;
-  margin-bottom: 0.75rem;
+  margin: 0 auto 0.75rem;
+  text-align: center;
+  width: 100%;
+  max-width: 900px;
 }
 
 .text-gradient {
@@ -205,6 +222,7 @@ body {
   max-width: 660px;
   margin: 0 auto;
   line-height: 1.55;
+  text-align: center;
 }
 
 /* --------------------------------------------------------------------------
@@ -216,14 +234,17 @@ body {
 
 .app-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 2rem;
   align-items: start;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 @media (min-width: 992px) {
   .app-grid {
-    grid-template-columns: 1.08fr 0.92fr;
+    grid-template-columns: 1.05fr 0.95fr;
     gap: 2.5rem;
   }
 }
@@ -235,6 +256,17 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1.4rem;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.preview-column {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .card {
@@ -245,6 +277,10 @@ body {
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
   padding: 1.5rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
   transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
 }
 
@@ -1136,32 +1172,57 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   12. Footer
+   12. Footer (Fully Centralized)
    -------------------------------------------------------------------------- */
 .app-footer {
   border-top: 1px solid var(--border-subtle);
   background: var(--bg-body-secondary);
-  padding: 2rem 0;
+  padding: 2.25rem 1rem;
   text-align: center;
   font-size: 0.85rem;
   color: var(--text-muted);
   position: relative;
   z-index: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
 }
 
 .footer-content {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.5rem;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 760px;
+}
+
+.footer-church {
+  text-align: center;
+  width: 100%;
 }
 
 .footer-church strong {
   color: var(--color-accent-gold);
 }
 
+.footer-event {
+  text-align: center;
+  width: 100%;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
 .footer-location {
   font-size: 0.78rem;
   color: var(--text-dim);
+  text-align: center;
+  width: 100%;
 }
 
 /* --------------------------------------------------------------------------
@@ -1252,21 +1313,173 @@ body {
   border: 0;
 }
 
-/* Responsive adjustments */
+/* --------------------------------------------------------------------------
+   15. Strict Mobile Responsive Adjustments (Zero Overflows Guarantee)
+   -------------------------------------------------------------------------- */
+@media (max-width: 991px) {
+  .app-grid {
+    grid-template-columns: 100%;
+    gap: 1.75rem;
+  }
+
+  .preview-sticky-wrapper {
+    position: static;
+  }
+
+  .preview-actions-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .btn-mobile-download {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 @media (max-width: 600px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .container {
+    padding: 0 0.85rem;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
   .app-header {
     padding: 1.75rem 0 1rem;
+    text-align: center;
   }
+
+  .header-badges {
+    margin-bottom: 0.65rem;
+  }
+
+  .badge {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.75rem;
+  }
+
+  .header-title {
+    font-size: clamp(1.6rem, 6.5vw, 2.3rem);
+    text-align: center;
+  }
+
+  .header-subtitle {
+    font-size: 0.92rem;
+    padding: 0 0.25rem;
+    text-align: center;
+  }
+
+  .app-grid {
+    gap: 1.25rem;
+  }
+
   .card {
-    padding: 1.15rem;
+    padding: 1.1rem 0.9rem;
+    border-radius: var(--radius-md);
   }
-  .toast-container {
-    left: 1rem;
-    right: 1rem;
-    bottom: 1.25rem;
+
+  .card-header {
+    gap: 0.75rem;
+    margin-bottom: 1rem;
   }
-  .nudge-controls-row {
+
+  .card-title {
+    font-size: 1.1rem;
+  }
+
+  .dropzone {
+    padding: 1.4rem 0.75rem;
+  }
+
+  .dropzone-text {
+    font-size: 0.88rem;
+  }
+
+  .uploaded-status {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
+    gap: 0.75rem;
+    padding: 0.75rem;
+  }
+
+  .uploaded-actions {
+    width: 100%;
+    justify-content: flex-end;
+    gap: 0.4rem;
+  }
+
+  .sample-photo-bar {
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    justify-content: space-between;
+  }
+
+  .input-with-icon .text-input {
+    padding: 0.8rem 2.4rem 0.8rem 2.6rem;
+    font-size: 0.95rem;
+  }
+
+  .btn-download {
+    padding: 0.95rem 1rem;
+  }
+
+  .btn-primary-title {
+    font-size: 1.05rem;
+  }
+
+  .btn-primary-sub {
+    font-size: 0.68rem;
+  }
+
+  .dp-stage {
+    padding: 0.4rem;
+    border-radius: var(--radius-lg);
+  }
+
+  .preview-header-bar {
+    margin-bottom: 0.6rem;
+  }
+
+  .app-footer {
+    padding: 1.85rem 0.85rem;
+    font-size: 0.82rem;
+  }
+
+  .footer-location {
+    font-size: 0.74rem;
+  }
+
+  .toast-container {
+    left: 0.85rem;
+    right: 0.85rem;
+    bottom: 1rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .container {
+    padding: 0 0.65rem;
+  }
+
+  .card {
+    padding: 0.95rem 0.75rem;
+  }
+
+  .badge {
+    font-size: 0.65rem;
+  }
+
+  .header-title {
+    font-size: 1.55rem;
+  }
+
+  .uploaded-actions .btn {
+    padding: 0.35rem 0.6rem;
+    font-size: 0.75rem;
   }
 }
