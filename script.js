@@ -60,7 +60,7 @@ const CONFIG = {
 
   // Sample Avatar Path (for instant testing)
   SAMPLE_AVATAR_SRC: 'assets/sample-avatar.png',
-  SAMPLE_NAME: 'PASTOR CHIDI ANTHONY'
+  SAMPLE_NAME: 'ANONYMOUS ATTENDEE'
 };
 
 // ============================================================================
